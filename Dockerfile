@@ -48,7 +48,7 @@ COPY ibek-support/ADCore/ ADCore/
 RUN ADCore/install.sh R3-12-1
 
 COPY ibek-support/quadEM/ quadEM/
-RUN quadEM/install.sh 9-4dls1
+RUN quadEM/install.sh R9-5
 
 ################################################################################
 
