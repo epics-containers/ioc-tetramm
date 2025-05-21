@@ -35,17 +35,18 @@ RUN ansible.sh autosave
 COPY ibek-support/asyn/ asyn/
 RUN ansible.sh asyn
 
-
-
 COPY ibek-support/busy/ busy/
 RUN ansible.sh busy
+
 COPY ibek-support/sscan/ sscan/
 RUN ansible.sh sscan
+
 COPY ibek-support/calc/ calc/
 RUN ansible.sh calc
 
 COPY ibek-support/ADCore/ ADCore/
 RUN ansible.sh ADCore
+
 COPY ibek-support/quadEM/ quadEM/
 RUN ansible.sh quadEM
 # get the ioc source and build it
