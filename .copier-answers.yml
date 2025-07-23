@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: 4.3.2
+_commit: 4.4.3
 _src_path: https://github.com/epics-containers/ioc-template
 description: Support for CAENels Picoammeters
 git_platform: github.com
