@@ -57,7 +57,7 @@ RUN ansible.sh ioc
 FROM developer AS runtime_prep
 
 # get the products from the build stage and reduce to runtime assets only
-RUN ibek ioc extract-runtime-assets /assets
+RUN ibek ioc extract-runtime-assets /assets /python
 
 ##### runtime stage ############################################################
 FROM ${RUNTIME} AS runtime
