@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=../ioc.schema.json
+# Copied from https://gitlab.diamond.ac.uk/controls/containers/beamline/i03-services
+# services/bl03i-ea-xbpm-01/config/ioc.yaml at commit b0a975022df828866bc708d722949ee602ce9ad8
+# Changed, so that nobody running this test reaches a real device:
+# - 1 device address replaced with 127.0.0.1
+# tests/run-tests.sh runs it with start.sh --test, which generates the
+# runtime assets but does not launch the IOC.
+
+# Runtime config for this IOC instance (config/ is mounted as the K8s ConfigMap).
+# Add vendored support: ibek pattern add <library>:<pattern>@<tag> services/<instance>
+ioc_name: "{{ _global.get_env('IOC_NAME') }}"
+
+description: REPLACE_WITH_DESCRIPTION
+
+entities:
+  - type: epics.EpicsEnvSet
+    name: EPICS_TZ
+    value: GMT0BST
+
+  - type: epics.EpicsEnvSet
+    name: STREAM_PROTOCOL_PATH
+    value: /epics/runtime/protocol/
+
+  - type: devIocStats.iocAdminSoft
+    IOC: "{{ ioc_name | upper }}"
+
+  - type: epics.StartupCommand
+    command: callbackSetQueueSize(10000)    
+
+  - type: autosave.Autosave
+    P: 'BL03I-EA-XBPM-01:'
+    debug: false
+
+  - type: quadEM.TetrAMM
+    IP: 127.0.0.1:10001
+    P: BL03I-EA-XBPM-01
+    PORT: XBPM1.DRV
+    QSIZE: 20
+    R: ':DRV:'
+
+  - type: quadEM.Plugins
+    NDARRAY_PORT: XBPM1.DRV
+    PORTPREFIX: XBPM1
+    STAT_NCHAN: 1000
+    STAT_XSIZE: 10000
+
+  - type: quadEM.quadEM_TimeSeries
+    NDARRAY_PORT: XBPM1.DRV
+    NUM_FREQ: 4096
+    NUM_TS: 8192
+    PORT: XBPM1.TS
+
+  # Probably we don't this - inherited from i04
+  # - type: pvlogging.PvLogging
+  #   access_file: /epics/support/pvlogging/src/access.acf
